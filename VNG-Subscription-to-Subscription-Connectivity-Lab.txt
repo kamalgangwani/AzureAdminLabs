@@ -1,0 +1,23 @@
+###SUBS1 - GERMANY###
+$RG1 = "subs1"
+$Location1 = "Germany West Central"
+$vnet5gw = New-Object -TypeName Microsoft.Azure.Commands.Network.Models.PSVirtualNetworkGateway
+$vnet5gw.Name = "vgn-eastus"
+$vnet5gw.Id   = "/subscriptions/3bb32eae-85f4-4d7c-bb19-ce68ad8d7ebb/resourceGroups/subs2/providers/Microsoft.Network/virtualNetworkGateways/vgn-eastus"
+$Connection15 = "germany-to-eastus"
+$vnet1gw = New-Object -TypeName Microsoft.Azure.Commands.Network.Models.PSVirtualNetworkGateway
+$vnet1gw.Name = "vgn-germany"
+$vnet1gw.Id = "/subscriptions/f2dc0fd3-2e28-4d10-b21f-dc031f05ca37/resourceGroups/subs1/providers/Microsoft.Network/virtualNetworkGateways/vgn-germany"
+New-AzVirtualNetworkGatewayConnection -Name $Connection15 -ResourceGroupName $RG1 -VirtualNetworkGateway1 $vnet1gw -VirtualNetworkGateway2 $vnet5gw -Location $Location1 -ConnectionType Vnet2Vnet -SharedKey 'AzureA1b2C3'
+
+###SUBS2 - EASTUS###
+$RG5 = "subs2"
+$Location5 = "East US"
+$vnet5gw = New-Object -TypeName Microsoft.Azure.Commands.Network.Models.PSVirtualNetworkGateway
+$vnet5gw.Name = "vgn-eastus"
+$vnet5gw.Id   = "/subscriptions/3bb32eae-85f4-4d7c-bb19-ce68ad8d7ebb/resourceGroups/subs2/providers/Microsoft.Network/virtualNetworkGateways/vgn-eastus"
+$vnet1gw = New-Object -TypeName Microsoft.Azure.Commands.Network.Models.PSVirtualNetworkGateway
+$vnet1gw.Name = "vgn-germany"
+$vnet1gw.Id = "/subscriptions/f2dc0fd3-2e28-4d10-b21f-dc031f05ca37/resourceGroups/subs1/providers/Microsoft.Network/virtualNetworkGateways/vgn-germany"
+$Connection51 = "eastus-to-germany"
+New-AzVirtualNetworkGatewayConnection -Name $Connection51 -ResourceGroupName $RG5 -VirtualNetworkGateway1 $vnet5gw -VirtualNetworkGateway2 $vnet1gw -Location $Location5 -ConnectionType Vnet2Vnet -SharedKey 'AzureA1b2C3'
